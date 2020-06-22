@@ -1,0 +1,34 @@
+pipeline {
+	agent any
+	stages {
+		stage('Build') { 
+		steps {
+		// git url: 'https://gitlab.com/labh-dot/happytrip-java.git'
+		bat * * *
+		  cd happytrip-code
+		  mvn clean install
+		  * * *
+			}
+			}
+			stage('Test') {
+			steps {
+			// git url: 'https://gitlab.com/labh-dot/happytrip-java.git'
+			bat ***
+			cd happytrip-code
+			mvn -B verify
+			    ***
+				
+			}
+		}
+		stage('SonarQube') {
+			steps{
+			//Sonarqube taskId is automatically attahed to the pipeline context
+			bat ***
+			cd happytrip-code
+			mvn sonar:sonar \
+			-Dsonar.projectKey=HappyTrip \
+			-Dsonar.host.url=http://localhost:9000 \
+			-Dsonar.login=02726eda34bbagfjdfdffdgdf26fgagwSe7a02
+		}
+	}
+}
